@@ -96,7 +96,7 @@ public class OperLogAspect
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
             }
-            // 设置方法名称
+            // 通过反射设置方法名称
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
             operLog.setMethod(className + "." + methodName + "()");

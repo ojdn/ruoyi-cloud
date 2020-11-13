@@ -29,13 +29,20 @@ public class PreAuthorizeAspect
     @Autowired
     private RemoteMenuService sysMenuClient;
 
+    /**
+     * 通过注解表达式去获取注解方法位置
+     * @param point
+     * @return
+     * @throws Throwable
+     */
     @Around("@annotation(com.ruoyi.common.auth.annotation.HasPermissions)")
     public Object around(ProceedingJoinPoint point) throws Throwable
     {
-        Signature signature = point.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        HasPermissions annotation = method.getAnnotation(HasPermissions.class);
+
+        Signature signature = point.getSignature();//获取签名
+        MethodSignature methodSignature = (MethodSignature) signature;//通过签名获取方法的一系列数据,方法名,参数
+        Method method = methodSignature.getMethod();//获取反射的方法对象
+        HasPermissions annotation = method.getAnnotation(HasPermissions.class);//通过反射获取方法上的注解
         if (annotation == null)
         {
             return point.proceed();
